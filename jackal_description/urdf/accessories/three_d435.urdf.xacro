@@ -161,7 +161,7 @@
     </xacro:if>
   </xacro:if>
 
-  <xacro:if value="$(arg is_sim)">
+  <xacro:if value="$(arg gazebo_sim)">
     <!-- CAMERA PLUGIN GAZEBO -->
     <xacro:if value="$(optenv JACKAL_D435 0)">
       <gazebo reference="${front_camera_frame_id}">
@@ -369,7 +369,7 @@
     </xacro:if>
   </xacro:if>
 
-  <xacro:if value="$(arg is_sim)">
+  <xacro:if value="$(arg gazebo_sim)">
     <!-- CAMERA PLUGIN GAZEBO -->
     <xacro:if value="$(optenv JACKAL_SIDE_D435 0)">
       <gazebo reference="${left_camera_frame_id}">
@@ -576,7 +576,7 @@
     </xacro:if>
   </xacro:if>
 
-  <xacro:if value="$(arg is_sim)">
+  <xacro:if value="$(arg gazebo_sim)">
     <!-- CAMERA PLUGIN GAZEBO -->
     <xacro:if value="$(optenv JACKAL_SIDE_D435 0)">
       <gazebo reference="${right_camera_frame_id}">
