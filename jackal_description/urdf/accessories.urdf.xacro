@@ -216,8 +216,11 @@
 
   <!-- If enabled, generate the d435 camera payload. -->
   <xacro:property name="d435" value="$(optenv JACKAL_D435 0)" />
-  <xacro:property name="d435_stereo" value="$(optenv JACKAL_D435 0)" />
-  <xacro:if value="${d435 or d435_stereo}">
+  <xacro:property name="d435_stereo" value="$(optenv JACKAL_D435_STEREO 0)" />
+  <xacro:property name="side_d435" value="$(optenv JACKAL_SIDE_D435 0)" />
+  <xacro:property name="side_d435_stereo" value="$(optenv JACKAL_SIDE_D435_STEREO 0)" />
+  
+  <xacro:if value="${d435 and d435_stereo and not side_d435}">
     <xacro:property name="name" value="$(optenv JACKAL_D435_NAME front)" />
     <xacro:property name="mount" value="$(optenv JACKAL_D435_MOUNT front)" />
     <xacro:property name="camera_xyz" default="$(optenv JACKALD435_XYZ 0.042 0.0 0.0)" />
@@ -227,6 +230,38 @@
     <xacro:property name="camera_frame_id" value="$(optenv JACKAL_D435_FRAME camera_color_frame)" />
     <xacro:property name="stereo_camera_frame_id" value="$(optenv JACKAL_D435_STEREO_FRAME camera_infra1_frame)" />   
     <xacro:include filename="$(find jackal_description)/urdf/accessories/d435.urdf.xacro" />
+  </xacro:if>
+
+  <!-- If enabled, generate the three d435 camera payload. -->
+  <xacro:if value="${side_d435 and side_d435_stereo}">
+    <xacro:property name="front_name" value="$(optenv JACKAL_D435_FRONT_NAME front)" />
+    <xacro:property name="front_mount" value="$(optenv JACKAL_D435_FRONT_MOUNT front)" />
+    <xacro:property name="front_camera_xyz" default="$(optenv JACKALD435_FRONT_XYZ 0.042 0.0 0.3)" /> 
+    <xacro:property name="front_camera_rpy" default="$(optenv JACKALD435_FRONT_RPY 0.0 0.0 0.0)" /> 
+    <xacro:property name="front_prefix" value="$(optenv JACKAL_D435_FRONT_PREFIX ${front_mount})" />
+    <xacro:property name="front_parent" value="$(optenv JACKAL_D435_PARENT ${front_mount}_mount)" />
+    <xacro:property name="front_camera_frame_id" value="$(optenv JACKAL_D435_FRAME front_camera_color_frame)" />
+    <xacro:property name="front_stereo_camera_frame_id" value="$(optenv JACKAL_D435_STEREO_FRAME front_camera_infra1_frame)" />  
+
+    <xacro:property name="left_name" value="$(optenv JACKAL_D435_LEFT_NAME left)" />
+    <xacro:property name="left_mount" value="$(optenv JACKAL_D435_LEFT_MOUNT mid)" />
+    <xacro:property name="left_camera_xyz" default="$(optenv JACKALD435_LEFT_XYZ 0.0 0.06 0.3)" />
+    <xacro:property name="left_camera_rpy" default="$(optenv JACKALD435_LEFT_RPY 0.0 0.0 ${pi/2})" />
+    <xacro:property name="left_prefix" value="$(optenv JACKAL_D435_LEFT_PREFIX ${left_mount})" />
+    <xacro:property name="left_parent" value="$(optenv JACKAL_D435_PARENT ${left_mount}_mount)" />
+    <xacro:property name="left_camera_frame_id" value="$(optenv JACKAL_D435_FRAME left_camera_color_frame)" />
+    <xacro:property name="left_stereo_camera_frame_id" value="$(optenv JACKAL_D435_STEREO_FRAME left_camera_infra1_frame)" />  
+
+    <xacro:property name="right_name" value="$(optenv JACKAL_D435_RIGHT_NAME right)" />
+    <xacro:property name="right_mount" value="$(optenv JACKAL_D435_RIGHT_MOUNT mid)" />
+    <xacro:property name="right_camera_xyz" default="$(optenv JACKALD435_RIGHT_XYZ 0.0 ${-0.06} 0.3)" />
+    <xacro:property name="right_camera_rpy" default="$(optenv JACKALD435_RIGHT_RPY 0.0 0.0 ${-pi/2})" />
+    <xacro:property name="right_prefix" value="$(optenv JACKAL_D435_RIGHT_PREFIX ${right_mount})" />
+    <xacro:property name="right_parent" value="$(optenv JACKAL_D435_PARENT ${right_mount}_mount)" />
+    <xacro:property name="right_camera_frame_id" value="$(optenv JACKAL_D435_FRAME right_camera_color_frame)" />
+    <xacro:property name="right_stereo_camera_frame_id" value="$(optenv JACKAL_D435_STEREO_FRAME right_camera_infra1_frame)" />                
+    
+    <xacro:include filename="$(find jackal_description)/urdf/accessories/three_d435.urdf.xacro" />
   </xacro:if>
 
 
